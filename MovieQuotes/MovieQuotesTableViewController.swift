@@ -10,14 +10,23 @@ import UIKit
 
 class MovieQuotesTableViewController: UITableViewController {
     let movieQuoteCellID = "MovieQuoteCell"
+    let detailSegueID = "DetailSegue"
     var movieQuotes = [MovieQuite]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = editButtonItem
         movieQuotes.append(MovieQuite(quote: "I'll be back", movie: "Terminator"))
         movieQuotes.append(MovieQuite(quote: "Yo Adrian!", movie: "Rocky"))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddQuoteDialog))
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == .delete) {
+            movieQuotes.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
     }
     
    @objc func showAddQuoteDialog() {
@@ -37,9 +46,8 @@ class MovieQuotesTableViewController: UITableViewController {
     let submitAction = UIAlertAction(title: "Create Quote", style: .default, handler: { (action) in let quoteTextFields = alertController.textFields![0] as UITextField
         let movieTextFields = alertController.textFields![1] as UITextField
         let newMoview = MovieQuite(quote: quoteTextFields.text!, movie: movieTextFields.text!)
-        self.movieQuotes.insert(newMoview, at: 0)
+        self.movieQuotes.insert(newMoview, at: 0    )
         self.tableView.reloadData()
-        
     })
         alertController.addAction(submitAction)
     
@@ -58,5 +66,13 @@ class MovieQuotesTableViewController: UITableViewController {
         cell.detailTextLabel?.text = movieQuotes[indexPath.row].movie
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == detailSegueID {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                (segue.destination as! MovieQuoteDetailViewController).movieQuote = movieQuotes[indexPath.row]
+            }
+        }
     }
 }
