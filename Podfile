@@ -8,5 +8,6 @@ target 'MovieQuotes' do
   # Pods for MovieQuotes
   # add pods for desired Firebase products
   # https://firebase.google.com/docs/ios/setup#available-pods
+  pod 'Firebase/Analytics'
   pod 'Firebase/Firestore'
 end

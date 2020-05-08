@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import Firebase
 
 class MovieQuotesTableViewController: UITableViewController {
     let movieQuoteCellID = "MovieQuoteCell"
     let detailSegueID = "DetailSegue"
+    
+    var movieQuotesRef: CollectionReference!
+    var movieQuoteListener: ListenerRegistration!
+    
     var movieQuotes = [MovieQuite]()
     
     override func viewDidLoad() {
@@ -20,12 +25,32 @@ class MovieQuotesTableViewController: UITableViewController {
         movieQuotes.append(MovieQuite(quote: "Yo Adrian!", movie: "Rocky"))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddQuoteDialog))
+        
+        movieQuotesRef = Firestore.firestore().collection("MovieQuotes")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
+        movieQuoteListener = movieQuotesRef.addSnapshotListener {
+            (querySnapShot, error) in if let querySnapShot = querySnapShot {
+                self.movieQuotes.removeAll()
+                querySnapShot.documents.forEach { (docSnapShot) in
+                    self.movieQuotes.append(MovieQuite(documentSnapShot: docSnapShot))
+                }
+                self.tableView.reloadData()
+            }
+            else {
+                print("Error getting movie quotes \(error!)")
+                return
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        movieQuoteListener.remove()
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
