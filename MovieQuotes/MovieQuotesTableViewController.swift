@@ -33,7 +33,7 @@ class MovieQuotesTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
-        movieQuoteListener = movieQuotesRef.addSnapshotListener {
+        movieQuoteListener = movieQuotesRef.order(by: "created", descending: true).limit(to: 50).addSnapshotListener {
             (querySnapShot, error) in if let querySnapShot = querySnapShot {
                 self.movieQuotes.removeAll()
                 querySnapShot.documents.forEach { (docSnapShot) in
@@ -76,8 +76,13 @@ class MovieQuotesTableViewController: UITableViewController {
     
     let submitAction = UIAlertAction(title: "Create Quote", style: .default, handler: { (action) in let quoteTextFields = alertController.textFields![0] as UITextField
         let movieTextFields = alertController.textFields![1] as UITextField
-        let newMoview = MovieQuite(quote: quoteTextFields.text!, movie: movieTextFields.text!)
-        self.movieQuotes.insert(newMoview, at: 0    )
+//        let newMoview = MovieQuite(quote: quoteTextFields.text!, movie: movieTextFields.text!)
+//        self.movieQuotes.insert(newMoview, at: 0    )
+        self.movieQuotesRef.addDocument(data: [
+            "quote": quoteTextFields.text!,
+            "movie": movieTextFields.text!,
+            "created": Timestamp.init()
+        ])
         self.tableView.reloadData()
     })
         alertController.addAction(submitAction)
