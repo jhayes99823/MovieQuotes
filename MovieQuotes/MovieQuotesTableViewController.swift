@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 
 class MovieQuotesTableViewController: UITableViewController {
     let movieQuoteCellID = "MovieQuoteCell"
@@ -31,6 +32,21 @@ class MovieQuotesTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if (Auth.auth().currentUser == nil) {
+            // NOT signed in. Anon sign in
+            print("Signing in")
+            Auth.auth().signInAnonymously { (authRes, error) in
+                if let error = error {
+                    print("Error with anon auth! \(error)")
+                    return
+                }
+                print("Successful signup")
+            }
+        } else {
+            // already signed in
+            print("You are already signed in")
+        }
         
         tableView.reloadData()
         movieQuoteListener = movieQuotesRef.order(by: "created", descending: true).limit(to: 50).addSnapshotListener {
@@ -81,7 +97,8 @@ class MovieQuotesTableViewController: UITableViewController {
         self.movieQuotesRef.addDocument(data: [
             "quote": quoteTextFields.text!,
             "movie": movieTextFields.text!,
-            "created": Timestamp.init()
+            "created": Timestamp.init(),
+            "author": Auth.auth().currentUser!.uid
         ])
         self.tableView.reloadData()
     })
