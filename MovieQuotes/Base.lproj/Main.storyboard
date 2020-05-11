@@ -87,17 +87,34 @@
                                     <action selector="pressedLoginExistingUser:" destination="Lu8-Qq-iSa" eventType="touchUpInside" id="OQk-GH-nEs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENs-QK-9DH">
+                                <rect key="frame" x="57" y="445" width="300" height="60"/>
+                                <color key="backgroundColor" red="0.50196078431372548" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="3NG-yb-whS"/>
+                                    <constraint firstAttribute="width" constant="300" id="LsC-Hg-DLa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <state key="normal" title="Sign In WIth Rosefire">
+                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="pressedRoseFireLogin:" destination="Lu8-Qq-iSa" eventType="touchUpInside" id="qwG-7U-qTH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Vpb-vy-MuW" firstAttribute="leading" secondItem="xmc-9O-6cA" secondAttribute="leading" constant="20" id="CCZ-EX-UMb"/>
                             <constraint firstItem="xmc-9O-6cA" firstAttribute="trailing" secondItem="l2f-Wr-X3L" secondAttribute="trailing" constant="20" id="D0A-xD-dcp"/>
                             <constraint firstAttribute="trailing" secondItem="0bJ-kR-LBR" secondAttribute="trailing" constant="20" id="J71-o4-3T0"/>
+                            <constraint firstItem="ENs-QK-9DH" firstAttribute="centerY" secondItem="xmc-9O-6cA" secondAttribute="centerY" id="Mrw-RW-ozV"/>
                             <constraint firstItem="Vpb-vy-MuW" firstAttribute="top" secondItem="l2f-Wr-X3L" secondAttribute="bottom" constant="35" id="O5w-hT-8zX"/>
                             <constraint firstItem="l2f-Wr-X3L" firstAttribute="top" secondItem="znq-YI-NNe" secondAttribute="bottom" constant="30" id="V0J-Hl-E5S"/>
                             <constraint firstItem="0bJ-kR-LBR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vpb-vy-MuW" secondAttribute="trailing" constant="8" symbolic="YES" id="biY-LC-bBu"/>
                             <constraint firstItem="znq-YI-NNe" firstAttribute="leading" secondItem="xmc-9O-6cA" secondAttribute="leading" constant="20" id="bjt-fQ-3EM"/>
                             <constraint firstItem="l2f-Wr-X3L" firstAttribute="leading" secondItem="xmc-9O-6cA" secondAttribute="leading" constant="20" id="dgc-fn-oQL"/>
+                            <constraint firstItem="ENs-QK-9DH" firstAttribute="centerX" secondItem="xmc-9O-6cA" secondAttribute="centerX" id="fhs-Go-Bt7"/>
                             <constraint firstItem="znq-YI-NNe" firstAttribute="top" secondItem="xmc-9O-6cA" secondAttribute="top" constant="50" id="gFk-fc-0M8"/>
                             <constraint firstItem="xmc-9O-6cA" firstAttribute="trailing" secondItem="znq-YI-NNe" secondAttribute="trailing" constant="20" id="qu8-lH-ARO"/>
                             <constraint firstItem="0bJ-kR-LBR" firstAttribute="top" secondItem="l2f-Wr-X3L" secondAttribute="bottom" constant="35" id="rP1-fN-8FE"/>
@@ -113,7 +130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pfx-kp-Qfq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-97" y="-85"/>
+            <point key="canvasLocation" x="-97.101449275362327" y="-85.044642857142847"/>
         </scene>
         <!--Movie Quote Detail View Controller-->
         <scene sceneID="K86-Qn-xHU">
