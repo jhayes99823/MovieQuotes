@@ -19,6 +19,8 @@ class MovieQuotesTableViewController: UITableViewController {
     
     var movieQuotes = [MovieQuite]()
     
+    var isShowingAllQuotes = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
@@ -33,11 +35,17 @@ class MovieQuotesTableViewController: UITableViewController {
             
         let submitAction = UIAlertAction(title: "Create Quote", style: .default, handler: { (action) in self.showAddQuoteDialog()})
         
+        let showUserQuotes = UIAlertAction(title: self.isShowingAllQuotes ? "Show Only My Quotes" : "Show All Quotes", style: .default, handler: { (action) in
+            // toggle showAll vs show mine
+            self.isShowingAllQuotes = !self.isShowingAllQuotes
+            // update list)
+            self.startListening()
+        })
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
             
      
-             
+        alertController.addAction(showUserQuotes)
                 alertController.addAction(submitAction)
             
                 present(alertController, animated: true, completion: nil)
@@ -67,7 +75,21 @@ class MovieQuotesTableViewController: UITableViewController {
         }
         
         tableView.reloadData()
-        movieQuoteListener = movieQuotesRef.order(by: "created", descending: true).limit(to: 50).addSnapshotListener {
+        startListening()
+    }
+    
+    func startListening() {
+        if (movieQuoteListener != nil) {
+            movieQuoteListener.remove()
+        }
+        
+        var query = movieQuotesRef.order(by: "created", descending: true).limit(to: 50)
+        
+        if (!isShowingAllQuotes) {
+            query = query.whereField("author", isEqualTo: Auth.auth().currentUser!.uid)
+        }
+        
+        movieQuoteListener = query.addSnapshotListener {
             (querySnapShot, error) in if let querySnapShot = querySnapShot {
                 self.movieQuotes.removeAll()
                 querySnapShot.documents.forEach { (docSnapShot) in
