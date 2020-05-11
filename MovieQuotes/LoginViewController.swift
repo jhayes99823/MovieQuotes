@@ -81,6 +81,7 @@ class LoginViewController: UIViewController {
               return
             }
             // User is signed in using Firebase!
+            self.performSegue(withIdentifier: self.showListSegueID, sender: self)
           }
         }
 
