@@ -13,17 +13,13 @@ class MovieQuite {
     var quote: String
     var movie: String
     var id: String?
-    
-    
-    init(quote: String, movie: String) {
-        self.quote = quote
-        self.movie = movie
-    }
+    var author: String
     
     init(documentSnapShot: DocumentSnapshot) {
         self.id = documentSnapShot.documentID
         let data = documentSnapShot.data()!
         self.quote = data["quote"] as! String
         self.movie = data["movie"] as! String
+        self.author = data["author"] as! String
     }
 }

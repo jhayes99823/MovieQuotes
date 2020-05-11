@@ -22,12 +22,15 @@ class MovieQuotesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
-        movieQuotes.append(MovieQuite(quote: "I'll be back", movie: "Terminator"))
-        movieQuotes.append(MovieQuite(quote: "Yo Adrian!", movie: "Rocky"))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddQuoteDialog))
         
         movieQuotesRef = Firestore.firestore().collection("MovieQuotes")
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let movieQuote = movieQuotes[indexPath.row]
+        return Auth.auth().currentUser!.uid == movieQuote.author
     }
     
     override func viewWillAppear(_ animated: Bool) {
