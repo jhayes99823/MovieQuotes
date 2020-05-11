@@ -22,10 +22,25 @@ class MovieQuotesTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.leftBarButtonItem = editButtonItem
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddQuoteDialog))
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Menu", style: .plain, target: self, action: #selector(showMenu))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showAddQuoteDialog))
+
         movieQuotesRef = Firestore.firestore().collection("MovieQuotes")
+    }
+    
+    @objc func showMenu() {
+        let alertController = UIAlertController(title: nil, message:nil, preferredStyle: .actionSheet)
+            
+        let submitAction = UIAlertAction(title: "Create Quote", style: .default, handler: { (action) in self.showAddQuoteDialog()})
+        
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+                alertController.addAction(cancelAction)
+            
+     
+             
+                alertController.addAction(submitAction)
+            
+                present(alertController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -79,7 +94,7 @@ class MovieQuotesTableViewController: UITableViewController {
         }
     }
     
-   @objc func showAddQuoteDialog() {
+   func showAddQuoteDialog() {
         let alertController = UIAlertController(title: "Create a new movie quote", message: "", preferredStyle: .alert)
     
         alertController.addTextField { (textfield) in
