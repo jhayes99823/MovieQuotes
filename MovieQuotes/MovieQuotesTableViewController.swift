@@ -20,6 +20,7 @@ class MovieQuotesTableViewController: UITableViewController {
     var movieQuotes = [MovieQuite]()
     
     var isShowingAllQuotes = true
+    var authListenerHandle: AuthStateDidChangeListenerHandle!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +45,16 @@ class MovieQuotesTableViewController: UITableViewController {
                 let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
             
+        let signOutAction = UIAlertAction(title: "Sign Out", style: .default, handler: { (action) in         do {
+            try Auth.auth().signOut()
+            
+        } catch {
+            print("Sign out error")
+        } })
      
         alertController.addAction(showUserQuotes)
                 alertController.addAction(submitAction)
-            
+        alertController.addAction(signOutAction)
                 present(alertController, animated: true, completion: nil)
     }
     
@@ -73,18 +80,16 @@ class MovieQuotesTableViewController: UITableViewController {
 //            // already signed in
 //            print("You are already signed in")
 //        }
+        authListenerHandle = Auth.auth().addStateDidChangeListener({ (auth, user) in
+            if (Auth.auth().currentUser == nil) {
+                print("go to login page")
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                print("youre signed in")
+            }
+        })
         
-//        do {
-//            try Auth.auth().signOut()
-//        } catch {
-//            print("Sign out error")
-//        }
-        
-        if (Auth.auth().currentUser == nil) {
-            print("go to login page")
-        } else {
-            print("youre signed in")
-        }
+
         
         tableView.reloadData()
         startListening()
@@ -119,6 +124,7 @@ class MovieQuotesTableViewController: UITableViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         movieQuoteListener.remove()
+        Auth.auth().removeStateDidChangeListener(authListenerHandle)
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
