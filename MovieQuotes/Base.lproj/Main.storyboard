@@ -102,6 +102,14 @@
                                     <action selector="pressedRoseFireLogin:" destination="Lu8-Qq-iSa" eventType="touchUpInside" id="qwG-7U-qTH"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fa-gm-vkN" customClass="GIDSignInButton">
+                                <rect key="frame" x="57" y="545" width="300" height="58"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="GZ3-HQ-R9h"/>
+                                    <constraint firstAttribute="width" constant="300" id="YaI-YL-cEC"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -111,9 +119,11 @@
                             <constraint firstItem="ENs-QK-9DH" firstAttribute="centerY" secondItem="xmc-9O-6cA" secondAttribute="centerY" id="Mrw-RW-ozV"/>
                             <constraint firstItem="Vpb-vy-MuW" firstAttribute="top" secondItem="l2f-Wr-X3L" secondAttribute="bottom" constant="35" id="O5w-hT-8zX"/>
                             <constraint firstItem="l2f-Wr-X3L" firstAttribute="top" secondItem="znq-YI-NNe" secondAttribute="bottom" constant="30" id="V0J-Hl-E5S"/>
+                            <constraint firstItem="5fa-gm-vkN" firstAttribute="top" secondItem="ENs-QK-9DH" secondAttribute="bottom" constant="40" id="VOX-1j-RMn"/>
                             <constraint firstItem="0bJ-kR-LBR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Vpb-vy-MuW" secondAttribute="trailing" constant="8" symbolic="YES" id="biY-LC-bBu"/>
                             <constraint firstItem="znq-YI-NNe" firstAttribute="leading" secondItem="xmc-9O-6cA" secondAttribute="leading" constant="20" id="bjt-fQ-3EM"/>
                             <constraint firstItem="l2f-Wr-X3L" firstAttribute="leading" secondItem="xmc-9O-6cA" secondAttribute="leading" constant="20" id="dgc-fn-oQL"/>
+                            <constraint firstItem="5fa-gm-vkN" firstAttribute="centerX" secondItem="xmc-9O-6cA" secondAttribute="centerX" id="eSR-A4-rBC"/>
                             <constraint firstItem="ENs-QK-9DH" firstAttribute="centerX" secondItem="xmc-9O-6cA" secondAttribute="centerX" id="fhs-Go-Bt7"/>
                             <constraint firstItem="znq-YI-NNe" firstAttribute="top" secondItem="xmc-9O-6cA" secondAttribute="top" constant="50" id="gFk-fc-0M8"/>
                             <constraint firstItem="xmc-9O-6cA" firstAttribute="trailing" secondItem="znq-YI-NNe" secondAttribute="trailing" constant="20" id="qu8-lH-ARO"/>

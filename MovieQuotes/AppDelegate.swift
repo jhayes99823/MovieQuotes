@@ -8,15 +8,51 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        GIDSignIn.sharedInstance()?.clientID = FirebaseApp.app()?.options.clientID
+        GIDSignIn.sharedInstance()?.delegate = self
         return true
     }
+    
+    @available(iOS 9.0, *)
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any])
+      -> Bool {
+      return GIDSignIn.sharedInstance().handle(url)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+      // ...
+      if let error = error {
+        print("error with google sign in \(error)")
+        return
+      }
+
+      guard let authentication = user.authentication else { return }
+      let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
+                                                        accessToken: authentication.accessToken)
+        Auth.auth().signInAndRetrieveData(with: credential) { (autDataRes, error) in
+                     if let error = error {
+                       print("Firebase sign in error with google! \(error)")
+                       return
+                     }
+                     // User is signed in using Firebase!
+            let loginVc = GIDSignIn.sharedInstance()?.presentingViewController as! LoginViewController
+            loginVc.performSegue(withIdentifier: loginVc.showListSegueID, sender: loginVc)
+                   }
+        }
+
+//    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+//        // Perform any operations when the user disconnects from app here.
+//        // ...
+//    }
 
     // MARK: UISceneSession Lifecycle
 

@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 import Rosefire
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
     var showListSegueID = "ShowListSegue"
@@ -23,6 +24,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         emailTextField.placeholder = "Email"
         passwordTextField.placeholder = "Password"
+        GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
